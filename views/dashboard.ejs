@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+
+
+.gender-column, .syllabus-column {
+  text-transform: capitalize;
+}
+
+
+.search-bar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search-bar-container input {
+      width: 300px;
+      padding: 5px 15px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f6f9;
+      padding-top: 70px;
+    }
+
+    .dashboard-container {
+      padding: 28px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 28px;
+      box-shadow: 1px 14px 16px rgba(5, 5, 5, 0.1);
+      width: 90%;
+      max-width: 1500px;
+    }
+
+    h1, h2 {
+      color: #4e73df;
+      text-align: center;
+    }
+
+    .navbar {
+      background-color: #4e73df;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .navbar-brand:hover {
+      color: #d1d3e2;
+    }
+
+    .btn-logout {
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .btn-logout:hover {
+      background-color: #ffffff;
+      color: #4e73df;
+    }
+
+    .table-responsive {
+      max-height: 500px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+
+    .table th, .table td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Styles for Pagination Buttons */
+    .pagination-container button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      background-color: #4e73df;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .pagination-container button:hover {
+      background-color: #2e59d9;
+      transform: translateY(-2px);
+    }
+
+    .pagination-container button:disabled {
+      background-color: #d1d3e2;
+      color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    /* Styles for Accept and Deny Buttons */
+    .btn-status {
+      font-size: 12px;
+      padding: 5px 10px;
+      margin: 2px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .btn-status:hover {
+      opacity: 0.85;
+    }
+
+    /* Style for the chart */
+    .chart-widget {
+      margin-top: 50px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 50%; /* Smaller size for chart */
+      margin: 0 auto;
+    }
+
+    .chart-filters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 1200px) {
+      .chart-widget {
+        width: 60%;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .chart-widget {
+        width: 70%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 20px;
+      }
+
+      .chart-widget {
+        width: 80%;
+      }
+
+      .table-responsive {
+        max-height: none;
+      }
+
+      .pagination-container {
+        flex-direction: column;
+      }
+
+      .pagination-container button {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .table th, .table td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar {
+        padding: 10px;
+      }
+
+      .navbar-brand {
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .table th, .table td {
+        font-size: 10px;
+        padding: 6px;
+      }
+
+      .chart-widget {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">School</a>
+      <div class="ml-auto">
+        <button id="logoutButton" class="btn btn-danger" onclick="logout()">Logout</button>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <h1>Welcome to Admin Dashboard</h1>
+
+    <!-- Search Bar Section -->
+    <div class="search-bar-container">
+        <h2>Submitted Entries</h2>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by Name or ID" onkeyup="searchEntries()" />
+      </div>
+
+   <!-- Table Section -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sl.No</th>
+            <th>ID</th> <!-- New Column for ID -->
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Class</th>
+            <th>Father's Name</th>
+            <th>Father's Occupation</th>
+            <th>Mother's Name</th>
+            <th>Mother's Occupation</th>
+            <th>Gender</th>
+            <th>Syllabus</th>
+            <th>Message</th>
+            <th>Dated</th> <!-- New Column for Dated -->
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="entriesTableBody">
+          <% if (entries && entries.length > 0) { %>
+            <% entries.forEach((entry, index) => { if (index < 4) { %> 
+              <tr class="entry-row">
+                <td><%= entry.id %></td> <!-- Display ID -->
+                <td><%= entry.name %></td>
+                <td><%= entry.email %></td>
+                <td><%= entry.contact %></td>
+                <td><%= entry.class %></td>
+                <td><%= entry.father_name %></td>
+                <td><%= entry.father_occupation %></td>
+                <td><%= entry.mother_name %></td>
+                <td><%= entry.mother_occupation %></td>
+                <!-- <td><%= entry.sex %></td> -->
+                <td class="gender-column"><%= entry.gender %></td>
+                <!-- <td><%= entry.syllabus %></td> -->
+                <td class="syllabus-column"><%= entry.syllabus %></td>
+
+                <td><%= entry.message %></td>
+                <td><%= entry.dated %></td> <!-- Display Dated -->
+                <td>
+                  <% if (entry.status === 'accepted') { %>
+                    <span class="badge badge-success">Accepted</span>
+                  <% } else if (entry.status === 'denied') { %>
+                    <span class="badge badge-danger">Denied</span>
+                  <% } else { %>
+                    <div>
+                      <button class="btn btn-success btn-status" onclick="updateStatus('<%= entry.id %>', 'accepted')">Accept</button>
+                      <button class="btn btn-danger btn-status" onclick="updateStatus('<%= entry.id %>', 'denied')">Deny</button>
+                    </div>
+                  <% } %>
+                </td>
+              </tr>
+            <% } }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="13" class="text-center">No entries available.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+      <button class="btn" id="prevPageBtn" onclick="changePage(-1)">Previous</button>
+      <button class="btn" id="nextPageBtn" onclick="changePage(1)">Next</button>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-widget">
+      <h2>Enquiry Breakdown</h2>
+      <div class="chart-filters">
+        <select id="syllabusFilter" class="form-control" style="width: 200px;">
+          <option value="">All Syllabus</option>
+          <% uniqueSyllabi.forEach(syllabus => { %>
+            <option value="<%= syllabus %>"><%= syllabus %></option>
+          <% }); %>
+        </select>
+        
+        <select id="classFilter" class="form-control" style="width: 200px;">
+          <option value="">All Classes</option>
+          <% uniqueClasses.forEach(classItem => { %>
+            <option value="<%= classItem.trim() %>"><%= classItem %></option>
+          <% }); %>
+        </select>
+        
+        
+      </div>
+      <canvas id="pieChart" width="300" height="150"></canvas>
+    </div>
+  </div>
+
+  <!-- Script for Pie Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    let currentPage = 1;
+    const entriesPerPage = 4;
+
+    let filteredEntries = <%- JSON.stringify(entries) %>;
+
+    const syllabusFilter = document.getElementById('syllabusFilter');
+    const classFilter = document.getElementById('classFilter');
+    const pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+    let pieChart;
+
+    function updatePieChart() {
+      const filteredData = filteredEntries.reduce((acc, entry) => {
+        acc[entry.class] = (acc[entry.class] || 0) + 1;
+        return acc;
+      }, {});
+
+      const labels = Object.keys(filteredData);
+      const data = Object.values(filteredData);
+
+      if (pieChart) pieChart.destroy();
+
+      pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Enrollment Distribution',
+            data: data,
+            backgroundColor: [
+  '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', 
+  '#858796', '#f8d7da', '#d39e00', '#f2d1a1', '#e3a1d3'
+],
+
+          }]
+        }
+      });
+    }
+
+
+    function filterEntries() {
+  const syllabusValue = syllabusFilter.value.trim();
+  const classValue = classFilter.value.trim();
+
+  filteredEntries = <%- JSON.stringify(entries) %>.filter(entry => {
+    const entrySyllabus = (entry.syllabus || '').toUpperCase();
+    const entryClass = entry.class ? entry.class.trim() : '';
+
+    return (!syllabusValue || entrySyllabus === syllabusValue.toUpperCase()) &&
+           (!classValue || entryClass === classValue);
+  });
+
+  updatePieChart();
+  paginateEntries();
+}
+
+
+
+    function paginateEntries() {
+  const start = (currentPage - 1) * entriesPerPage;
+  const end = start + entriesPerPage;
+  const paginatedEntries = filteredEntries.slice(start, end);
+
+  const tableBody = document.getElementById('entriesTableBody');
+  tableBody.innerHTML = '';
+
+  paginatedEntries.forEach((entry, index) => {
+    const row = document.createElement('tr');
+    row.classList.add('entry-row');
+    row.innerHTML = `
+      <td>${start + index + 1}</td> <!-- Generate Sl.No dynamically -->
+      <td>${entry.id}</td>
+      <td>${entry.name}</td>
+      <td>${entry.email}</td>
+      <td>${entry.contact}</td>
+      <td>${entry.class}</td>
+      <td>${entry.father_name}</td>
+      <td>${entry.father_occupation}</td>
+      <td>${entry.mother_name}</td>
+      <td>${entry.mother_occupation}</td>
+      <td>${entry.sex}</td>
+      <td>${entry.syllabus}</td>
+      <td>${entry.message}</td>
+      <td>${entry.dated}</td>
+      <td>${entry.status === 'accepted' ? 
+          '<span class="badge badge-success">Accepted</span>' : 
+          (entry.status === 'denied' ? 
+          '<span class="badge badge-danger">Denied</span>' : 
+          '<div><button class="btn btn-success btn-status">Accept</button><button class="btn btn-danger btn-status">Deny</button></div>')}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+
+  document.getElementById('prevPageBtn').disabled = currentPage === 1;
+  document.getElementById('nextPageBtn').disabled = currentPage * entriesPerPage >= filteredEntries.length;
+}
+
+
+    function changePage(direction) {
+      currentPage += direction;
+      paginateEntries();
+    }
+
+      // Search Entries by Name or ID
+      function searchEntries() {
+      const searchValue = document.getElementById('searchInput').value.toLowerCase();
+      filteredEntries = <%- JSON.stringify(entries) %>.filter(entry => {
+        return entry.name.toLowerCase().includes(searchValue) || 
+               entry.id.toString().includes(searchValue);
+      });
+
+      paginateEntries();
+    }
+
+    syllabusFilter.addEventListener('change', filterEntries);
+    classFilter.addEventListener('change', filterEntries);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      paginateEntries();
+      updatePieChart();
+    });
+
+
+    function logout() {
+  const confirmLogout = window.confirm("Are you sure you want to log out?");
+  if (confirmLogout) {
+    window.location.href = '/admin/logout';
+  }
+}
+
+  </script>
+</body>
+</html>

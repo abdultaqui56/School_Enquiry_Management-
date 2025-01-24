@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Entry</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      padding-top: 70px; /* Offset for fixed navbar */
+    }
+
+    h1 {
+      color: #4e73df;
+      text-align: center;
+      margin: 30px 0; /* Added margin for spacing */
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #4e73df;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding-left: 15px; /* Reduced padding for left and right */
+      padding-right: 15px;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-left: 0; /* Aligned to left corner */
+    }
+
+    .navbar-brand:hover {
+      color: #d1d3e2;
+    }
+
+    .btn-admin {
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .btn-admin:hover {
+      background-color: #ffffff;
+      color: #4e73df;
+    }
+
+    /* Form Styles */
+    form {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    input, textarea, select {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-bottom: 18px;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #4e73df;
+      outline: none;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .radio-group label {
+      margin-right: 20px;
+    }
+
+    button {
+      padding: 12px 25px;
+      background-color: #4e73df;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2e5a94;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">School</a>
+      <div class="ml-auto">
+        <a href="/admin/login" class="btn btn-admin">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <h1>School Admission Enquiry</h1>
+
+  <form action="/submit" method="POST" onsubmit="return myFunction()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" pattern="^[A-Za-z\s]{3,20}$" title="Name should only contain letters and spaces, between 3 and 20 characters." placeholder="Ward Name" required>
+
+    <label for="father-name">Father's Name:</label>
+    <input type="text" id="father-name" name="father_name" placeholder="Father's Name" required>
+
+    <label for="father-occupation">Father's Occupation:</label>
+    <input type="text" id="father-occupation" name="father_occupation">
+
+    <label for="qualification">Qualification:</label>
+    <input type="text" id="father-qualification" name="father_qualification" placeholder="Ex: B.E, MBA, B.Com">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address." placeholder="Email" required>
+
+    <label for="contact-number">Contact Number:</label>
+    <input type="tel" id="contact-number" name="contact_number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number." placeholder="Contact Number" required>
+
+    <label for="mother-name">Mother's Name:</label>
+    <input type="text" id="mother-name" name="mother_name" placeholder="Mother's Name" required>
+
+    <label for="mother-occupation">Mother's Occupation:</label>
+    <input type="text" id="mother-occupation" name="mother_occupation">
+
+    <label for="qualification">Qualification:</label>
+    <input type="text" id="mother-qualification" name="mother_qualification" placeholder="Ex: B.E, MBA, B.Com">
+
+    <label>Gender:</label>
+    <div class="radio-group">
+      <label><input type="radio" id="male" name="sex" value="male" required> Male</label>
+      <label><input type="radio" id="female" name="sex" value="female"> Female</label>
+      <label><input type="radio" id="other" name="sex" value="other"> Other</label>
+    </div>
+
+    <label for="syllabus">Syllabus:</label>
+    <select id="syllabus" name="syllabus" required>
+      <option value="state">STATE</option>
+      <option value="cbse">CBSE</option>
+      <option value="icse">ICSE</option>
+    </select>
+
+    <label for="class">Class:</label>
+<select id="class" name="class" required>
+  <option value="I">I</option>
+  <option value="II">II</option>
+  <option value="III">III</option>
+  <option value="IV">IV</option>
+  <option value="V">V</option>
+  <option value="VI">VI</option>
+  <option value="VII">VII</option>
+  <option value="VIII">VIII</option>
+  <option value="IX">IX</option>
+  <option value="X">X</option>
+</select>
+
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" placeholder="Enter your message here..." required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+
+  
+  <script>
+    function myFunction() {
+      alert("The form was submitted");
+      return true;
+    }
+  </script>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4e73df;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 14px;
+      color: #555;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      width: 100%;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #4e73df;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e73df;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2e5a94;
+    }
+
+    .alert {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #4e73df;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding-left: 15px; /* Reduced padding for left and right */
+      padding-right: 15px;
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .navbar-brand:hover {
+      color: #d1d3e2;
+    }
+
+    .btn-home {
+      color: #ffffff;
+    }
+
+    .btn-home:hover {
+      background-color: #ffffff;
+      color: #4e73df;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">School</a>
+      <div class="ml-auto">
+        <a href="/" class="btn btn-home">Home</a> <!-- Link to the home page -->
+      </div>
+    </div>
+  </nav>
+
+  <div class="login-container">
+    <h1>Admin Login</h1>
+
+    <!-- Error message (if any) -->
+    <% if (error) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+
+      <button type="submit" onclick="popup()">Login</button>
+    </form>
+  </div>
+
+
+  <script>
+    function popup(){
+        alert("Login Successfull");
+        return true;
+    }
+    
+  </script>
+</body>
+</html>
