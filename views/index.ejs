@@ -5,189 +5,291 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit Entry</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Add FontAwesome CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <style>
-    /* Global Styles */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-      padding-top: 70px; /* Offset for fixed navbar */
-    }
+  /* General Styles */
+  body {
+  font-family: Arial, sans-serif;
+  /* background-color:  */
+  margin: 0;
+  padding: 20px;
+}
 
-    h1 {
-      color: #4e73df;
-      text-align: center;
-      margin: 30px 0; /* Added margin for spacing */
-    }
+.container {
+  max-width: 700px;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  background: linear-gradient(45deg,rgba(0, 0, 0, 0.1),rgba(162, 202, 245, 0.9));
+}
 
-    /* Navbar Styles */
-    .navbar {
-      background-color: #4e73df;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding-left: 15px; /* Reduced padding for left and right */
-      padding-right: 15px;
-    }
+h1 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-    .navbar-brand {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-      margin-left: 0; /* Aligned to left corner */
-    }
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
 
-    .navbar-brand:hover {
-      color: #d1d3e2;
-    }
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
 
-    .btn-admin {
-      border: 2px solid #ffffff;
-      color: #ffffff;
-      font-weight: bold;
-    }
+input:focus, select:focus, textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
 
-    .btn-admin:hover {
-      background-color: #ffffff;
-      color: #4e73df;
-    }
+.radio-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 5px;
+}
 
-    /* Form Styles */
-    form {
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-    }
+.radio-group label {
+  font-weight: normal;
+  font-size: 14px;
+}
 
-    label {
-      margin-bottom: 8px;
-      font-size: 14px;
-      color: #555;
-    }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 
-    input, textarea, select {
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      margin-bottom: 18px;
-      font-size: 14px;
-      background-color: #f9f9f9;
-      transition: border-color 0.3s ease;
-    }
+.col-md-6 {
+  width: 48%;
+}
 
-    input:focus, textarea:focus, select:focus {
-      border-color: #4e73df;
-      outline: none;
-    }
+textarea {
+  resize: vertical;
+}
 
-    .radio-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 18px;
-    }
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    .radio-group label {
-      margin-right: 20px;
-    }
+button:hover {
+  background-color: #0056b3;
+}
 
-    button {
-      padding: 12px 25px;
-      background-color: #4e73df;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+.navbar {
+  background: linear-gradient(45deg, rgba(0, 123, 255, 0.9), rgba(0, 76, 153, 0.9));
+  padding: 8px 15px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    button:hover {
-      background-color: #2e5a94;
-    }
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.navbar .navbar-toggler {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar .navbar-toggler:focus {
+  outline: none;
+}
+
+.navbar .navbar-toggler i {
+  font-size: 24px;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand i {
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  .col-md-6 {
+    width: 100%;
+  }
+  .navbar {
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+  }
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .navbar {
+    padding: 5px 8px;
+  }
+}
+
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">School</a>
-      <div class="ml-auto">
-        <a href="/admin/login" class="btn btn-admin">Admin</a>
+      <a class="navbar-brand" href="/"><i class="fas fa-school"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="ml-auto navbar-nav">
+          <!-- Add FontAwesome icons here -->
+          <!-- <a class="nav-link" href=""><i class="fas fa-info-circle"></i>  ABOUT</a>
+          <a class="nav-link" href=""><i class="fas fa-file-invoice-dollar"></i>  FEE</a> -->
+          <!-- <a class="nav-link" href="/admin/login"><i class="fas fa-user-shield"></i>  ADMIN</a> -->
+        </div>
       </div>
     </div>
   </nav>
 
   <h1>School Admission Enquiry</h1>
 
-  <form action="/submit" method="POST" onsubmit="return myFunction()">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" pattern="^[A-Za-z\s]{3,20}$" title="Name should only contain letters and spaces, between 3 and 20 characters." placeholder="Ward Name" required>
-
-    <label for="father-name">Father's Name:</label>
-    <input type="text" id="father-name" name="father_name" placeholder="Father's Name" required>
-
-    <label for="father-occupation">Father's Occupation:</label>
-    <input type="text" id="father-occupation" name="father_occupation">
-
-    <label for="qualification">Qualification:</label>
-    <input type="text" id="father-qualification" name="father_qualification" placeholder="Ex: B.E, MBA, B.Com">
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address." placeholder="Email" required>
-
-    <label for="contact-number">Contact Number:</label>
-    <input type="tel" id="contact-number" name="contact_number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number." placeholder="Contact Number" required>
-
-    <label for="mother-name">Mother's Name:</label>
-    <input type="text" id="mother-name" name="mother_name" placeholder="Mother's Name" required>
-
-    <label for="mother-occupation">Mother's Occupation:</label>
-    <input type="text" id="mother-occupation" name="mother_occupation">
-
-    <label for="qualification">Qualification:</label>
-    <input type="text" id="mother-qualification" name="mother_qualification" placeholder="Ex: B.E, MBA, B.Com">
-
-    <label>Gender:</label>
-    <div class="radio-group">
-      <label><input type="radio" id="male" name="sex" value="male" required> Male</label>
-      <label><input type="radio" id="female" name="sex" value="female"> Female</label>
-      <label><input type="radio" id="other" name="sex" value="other"> Other</label>
+  <form action="/submit" method="POST" onsubmit="return myFunction()" class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="name">Name:<span id="co">*</span></label>
+        <input type="text" id="name" name="name" pattern="^[A-Za-z\s]{3,20}$" title="Name should only contain letters and spaces, between 3 and 20 characters." placeholder="Ward Name" required>
+  
+        <label for="father-name">Father's Name:<span id="co">*</span></label>
+        <input type="text" id="father-name" name="father_name" placeholder="Father's Name" required>
+  
+        <label for="father-occupation">Father's Occupation:</label>
+        <input type="text" id="father-occupation" name="father_occupation">
+  
+        <label for="father-qualification">Qualification:</label>
+        <input type="text" id="father-qualification" name="father_qualification" placeholder="Ex: B.E, MBA, B.Com">
+  
+        <label for="email">Email:<span id="co">*</span></label>
+        <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address." placeholder="Email" required>
+      </div>
+  
+      <div class="col-md-6">
+        <label for="contact-number">Contact Number:<span id="co">*</span></label>
+        <input type="tel" id="contact-number" name="contact_number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number." placeholder="Contact Number" required>
+  
+        <label for="mother-name">Mother's Name:<span id="co">*</span></label>
+        <input type="text" id="mother-name" name="mother_name" placeholder="Mother's Name" required>
+  
+        <label for="mother-occupation">Mother's Occupation:</label>
+        <input type="text" id="mother-occupation" name="mother_occupation">
+  
+        <label for="mother-qualification">Qualification:</label>
+        <input type="text" id="mother-qualification" name="mother_qualification" placeholder="Ex: B.E, MBA, B.Com">
+  
+        <label>Gender:<span id="co">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" id="male" name="sex" value="male" required> Male</label>
+          <label><input type="radio" id="female" name="sex" value="female"> Female</label>
+          <label><input type="radio" id="other" name="sex" value="other"> Prefer Not to say</label>
+        </div>
+      </div>
     </div>
-
-    <label for="syllabus">Syllabus:</label>
-    <select id="syllabus" name="syllabus" required>
-      <option value="state">STATE</option>
-      <option value="cbse">CBSE</option>
-      <option value="icse">ICSE</option>
-    </select>
-
-    <label for="class">Class:</label>
-<select id="class" name="class" required>
-  <option value="I">I</option>
-  <option value="II">II</option>
-  <option value="III">III</option>
-  <option value="IV">IV</option>
-  <option value="V">V</option>
-  <option value="VI">VI</option>
-  <option value="VII">VII</option>
-  <option value="VIII">VIII</option>
-  <option value="IX">IX</option>
-  <option value="X">X</option>
-</select>
-
-
+  
+    <div class="row">
+      <div class="col-md-6">
+        <label for="syllabus">Syllabus:<span id="co">*</span></label>
+        <select id="syllabus" name="syllabus" required>
+          <option value="state">STATE</option>
+          <option value="cbse">CBSE</option>
+          <option value="icse">ICSE</option>
+        </select>
+      </div>
+  
+      <div class="col-md-6">
+        <label for="class">Class:<span id="co">*</span></label>
+        <select id="class" name="class" required>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+          <option value="V">V</option>
+          <option value="VI">VI</option>
+          <option value="VII">VII</option>
+          <option value="VIII">VIII</option>
+          <option value="IX">IX</option>
+          <option value="X">X</option>
+        </select>
+      </div>
+    </div>
+  
     <label for="message">Message:</label>
     <textarea id="message" name="message" rows="4" placeholder="Enter your message here..." required></textarea>
-
-    <button type="submit">Submit</button>
-  </form>
-
-
   
+    <button type="submit" href="/index">Submit</button>
+  </form>
+  
+  
+
   <script>
     function myFunction() {
       alert("The form was submitted");
@@ -195,9 +297,9 @@
     }
   </script>
 
-  <!-- Bootstrap JS and dependencies -->
+  <!-- Correct order of Bootstrap dependencies -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

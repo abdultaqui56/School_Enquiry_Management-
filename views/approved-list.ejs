@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approved Entries List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+      
+    /* General Styles */
+    body {
+  background: #f4f7f6;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #05f354 0%, #02a62c 100%);
+  padding: 0.5rem 1rem; /* Reduced padding */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem; /* Standard font size */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #fff !important;
+  font-size: 1.2rem; /* Slightly smaller font size */
+}
+
+.navbar-brand i {
+  font-size: 1.4rem; /* Icon size remains slightly larger */
+  margin-right: 0.3rem;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 15px; /* Added space between items */
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+  font-size: 1rem; /* Standard size */
+  padding: 0.4rem 0.8rem; /* Reduced padding for a more compact look */
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #02a62c; /* Slight hover effect */
+}
+
+.btn-light {
+  color: #05f354;
+  background: #fff;
+  border: 1px solid #05f354;
+  padding: 0.3rem 0.8rem; /* More compact button */
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-light:hover {
+  background: #05f354;
+  color: white;
+}
+
+/* Container */
+.container {
+  max-width: 95%;
+  margin-top: 40px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Page Heading */
+h2 {
+  font-size: 1.8rem;
+  color: #05f354;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Filters Section */
+.filters {
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filters select {
+  width: 100%;
+  max-width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #05f354;
+  box-shadow: 0px 0px 5px rgba(5, 243, 84, 0.5);
+}
+
+/* Table Styling */
+.table {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Fix table container's height to maintain consistent layout */
+.table-container {
+  max-height: 400px; /* Set the height as needed to avoid shifting */
+  overflow-y: auto;  /* Add scroll if needed */
+}
+
+.table th {
+  background: #05f354;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: #f1f8f4;
+}
+
+.table-striped tbody tr:hover {
+  background: #c8fad1;
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  position: relative;
+  z-index: 2;  /* Ensure it stays above other content */
+}
+
+.pagination .btn {
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin: 0 5px;
+  font-weight: 500;
+  border: 1px solid #05f354;
+  background: white;
+  color: #05f354;
+  transition: 0.3s ease-in-out;
+}
+
+.pagination .btn:hover {
+  background: #05f354;
+  color: white;
+}
+.pagination .btn[disabled] {
+  cursor: not-allowed; /* Change cursor to denied symbol */
+  opacity: 0.3; /* Optional: to visually show that it's disabled */
+}
+
+/* Fix Bar Graph Container Position */
+.chart-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 1200px;
+  height: 500px;
+  position: relative;
+}
+
+.chart-container h3 {
+  color: #333;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Chart Dropdown */
+.chart-filter-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chart-filter-container select {
+  width: 160px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  transition: 0.3s ease-in-out;
+}
+
+.chart-filter-container select:focus {
+  border-color: #05f354;
+  box-shadow: 0px 0px 5px rgba(5, 243, 84, 0.5);
+}
+
+
+
+/* Responsive Design */
+/* Media Queries for Different Screen Sizes */
+@media (max-width: 1024px) {
+  .chart-container {
+    max-width: 90%;
+    height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container { width: 100%; padding: 15px; }
+  h2 { font-size: 1.6rem; }
+  .filters select { font-size: 0.9rem; }
+  .chart-container {
+    max-width: 95%;
+    height: 400px;
+  }
+  .chart-filter-container select {
+    width: 140px;
+    font-size: 0.85rem;
+  }
+  .navbar {
+    padding: 0.5rem 0.8rem; /* Slightly smaller padding on mobile */
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-light { 
+    padding: 0.3rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  h2 { font-size: 1.4rem; }
+  .navbar { padding: 0.4rem 1rem; }
+  .filters select { font-size: 0.85rem; }
+  .chart-container {
+    max-width: 100%;
+    height: 350px;
+    padding: 15px;
+  }
+
+  .chart-filter-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart-filter-container select {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  /* Make X-axis labels readable on small screens */
+  .chart-container canvas {
+    overflow-x: auto;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/admin/dashboard">
+        <i class="fas fa-school"></i>
+      </a>
+      <button class="btn btn-light ml-auto" onclick="window.location.href='/admin/dashboard'">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2><marquee>Approved Entries List</marquee></h2>
+
+    <div class="filters">
+      <div class="row">
+        <div class="col-md-4">
+          <label><strong>Syllabus</strong></label>
+          <select class="form-control" id="syllabusFilter" onchange="applyFilters()">
+            <option value="All">All</option>
+            <% uniqueSyllabi.forEach(syllabus => { %>
+              <option value="<%= syllabus %>"><%= syllabus %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label><strong>Class</strong></label>
+          <select class="form-control" id="classFilter" onchange="applyFilters()">
+            <option value="All">All</option>
+            <% uniqueClasses.forEach(classItem => { %>
+              <option value="<%= classItem %>"><%= classItem %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label><strong>Year</strong></label>
+          <select class="form-control" id="yearFilter" onchange="applyFilters()">
+            <!-- Year options will be added dynamically -->
+          </select>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Sl.No</th>
+            <th>USN</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Class</th>
+            <th>Father's Name</th>
+            <th>Mother's Name</th>
+            <th>Gender</th>
+            <th>Syllabus</th>
+            <th>Message</th>
+            <th>Dated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (entries.length > 0) { %>
+            <% entries.forEach((entry, index) => { %>
+              <tr>
+                <td><%= (currentPage - 1) * 10 + index + 1 %></td>
+                <td><%= entry.usn || 'N/A' %></td>
+
+                <td><%= entry.id %></td>
+                <td><%= entry.name %></td>
+                <td><%= entry.email %></td>
+                <td><%= entry.contact %></td>
+                <td><%= entry.class %></td>
+                <td><%= entry.father_name %></td>
+                <td><%= entry.mother_name %></td>
+                <td><%= entry.sex %></td>
+                <td><%= entry.syllabus %></td>
+                <td><%= entry.message %></td>
+                <td><%= entry.formatted_date %></td> <!-- FIXED: Uses formatted_date from DB -->
+
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr>
+              <td colspan="12" class="text-center">No approved entries found</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <% if (currentPage > 1) { %>
+        <button class="btn btn-secondary" onclick="changePage(<%= currentPage - 1 %>)">Previous</button>
+      <% } else { %>
+        <button class="btn btn-secondary" disabled>Previous</button>
+      <% } %>
+      
+      <% if (currentPage < totalPages || entries.length === 4) { %>
+        <button class="btn btn-secondary" onclick="changePage(<%= currentPage + 1 %>)">Next</button>
+      <% } else { %>
+        <button class="btn btn-secondary" disabled>Next</button>
+      <% } %>
+    </div>
+    
+    
+
+    <div class="chart-container">
+      <div class="chart-filter-container">
+        <select id="chartSyllabusFilter" class="form-control">
+          <option value="All">All Syllabus</option>
+          <option value="STATE">STATE</option>
+          <option value="ICSE">ICSE</option>
+          <option value="CBSE">CBSE</option>
+        </select>
+        
+        <select id="chartYearFilter" class="form-control">
+          <!-- Year options will be added dynamically -->
+        </select>
+      </div>
+    
+      <canvas id="studentsChart"></canvas>
+    </div>
+    
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const yearFilter = document.getElementById("yearFilter");
+  const chartYearFilter = document.getElementById("chartYearFilter");
+  const currentYear = new Date().getFullYear();
+
+  // Populate Year Filters (Last 5 years including current year)
+  for (let i = currentYear - 4; i <= currentYear; i++) {
+    yearFilter.innerHTML += `<option value="${i}">${i}</option>`;
+    chartYearFilter.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+
+  // Preserve selected filter values from URL
+  const params = new URLSearchParams(window.location.search);
+  yearFilter.value = params.get("year") || currentYear;
+  chartYearFilter.value = params.get("year") || currentYear;
+  document.getElementById("syllabusFilter").value = params.get("syllabus") || "All";
+  document.getElementById("classFilter").value = params.get("class") || "All";
+  document.getElementById("chartSyllabusFilter").value = params.get("syllabus") || "All";
+
+  // Apply filters to table
+  function applyFilters() {
+    const syllabus = document.getElementById("syllabusFilter").value;
+    const classValue = document.getElementById("classFilter").value;
+    const year = document.getElementById("yearFilter").value;
+    
+    const url = new URL(window.location.href);
+    syllabus === "All" ? url.searchParams.delete("syllabus") : url.searchParams.set("syllabus", syllabus);
+    classValue === "All" ? url.searchParams.delete("class") : url.searchParams.set("class", classValue);
+    year ? url.searchParams.set("year", year) : url.searchParams.delete("year");
+    
+    window.location.href = url.toString();
+  }
+
+  document.getElementById("chartSyllabusFilter").addEventListener("change", updateChart);
+  document.getElementById("chartYearFilter").addEventListener("change", updateChart);
+
+  function updateChart() {
+  const selectedSyllabus = document.getElementById("chartSyllabusFilter").value;
+  const selectedYear = document.getElementById("chartYearFilter").value;
+  const ctx = document.getElementById("studentsChart").getContext("2d");
+
+  fetch(`/get-stats?syllabus=${selectedSyllabus}&year=${selectedYear}`)
+    .then(response => response.json())
+    .then(statsData => {
+      console.log("Chart Data:", statsData);
+
+      if (window.currentChart) {
+        window.currentChart.destroy();
+      }
+
+      const labels = Object.keys(statsData["STATE"]);
+      const stateData = Object.values(statsData["STATE"]);
+      const icseData = Object.values(statsData["ICSE"]);
+      const cbseData = Object.values(statsData["CBSE"]);
+
+      window.currentChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "STATE",
+              data: stateData,
+              backgroundColor: "rgba(5, 243, 84, 0.7)",
+              borderColor: "#05f354",
+              borderWidth: 2,
+            },
+            {
+              label: "ICSE",
+              data: icseData,
+              backgroundColor: "rgba(54, 162, 235, 0.7)",
+              borderColor: "#36a2eb",
+              borderWidth: 2,
+            },
+            {
+              label: "CBSE",
+              data: cbseData,
+              backgroundColor: "rgba(255, 99, 132, 0.7)",
+              borderColor: "#ff6384",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 10,
+                callback: value => `${value} students`,
+              },
+              suggestedMax: Math.ceil(Math.max(...stateData, ...icseData, ...cbseData) / 10) * 10,
+            },
+            x: {
+              title: { display: true, text: "Class" },
+              ticks: {
+                autoSkip: false, // Prevents labels from being skipped
+                maxRotation: window.innerWidth < 600 ? 45 : 0, // Rotates labels for small screens
+                minRotation: window.innerWidth < 600 ? 45 : 0,
+                font: {
+                  size: window.innerWidth < 600 ? 10 : 12, // Adjust font size for smaller screens
+                },
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              position: window.innerWidth < 600 ? "bottom" : "top", // Moves legend below chart on mobile
+            },
+            title: {
+              display: true,
+              text: `Student Distribution - ${selectedSyllabus} (${selectedYear})`,
+              font: { size: window.innerWidth < 600 ? 14 : 18 }, // Smaller title font for mobile
+            },
+          },
+        },
+      });
+    })
+    .catch(error => console.error("Chart Fetch Error:", error));
+}
+
+
+  updateChart();
+});
+
+    // Table filter functionality
+    function applyFilters() {
+      const syllabus = document.getElementById('syllabusFilter').value;
+      const classValue = document.getElementById('classFilter').value;
+      const url = new URL(window.location.href);
+      
+      if (syllabus === 'All') {
+        url.searchParams.delete('syllabus');
+      } else {
+        url.searchParams.set('syllabus', syllabus);
+      }
+      
+      if (classValue === 'All') {
+        url.searchParams.delete('class');
+      } else {
+        url.searchParams.set('class', classValue);
+      }
+      
+      window.location.href = url.toString();
+    }
+
+    // Pagination functionality
+    function changePage(page) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('page', page);
+  window.location.href = url.toString();
+}
+
+
+    // Set initial filter values
+    document.addEventListener("DOMContentLoaded", function() {
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById("syllabusFilter").value = params.get("syllabus") || "All";
+      document.getElementById("classFilter").value = params.get("class") || "All";
+    });
+  </script>
+  
+  <script>
+    // Function to generate USN when entry is approved
+    async function generateUSN(id, syllabus) {
+      try {
+        const response = await fetch('/update-usn', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id, syllabus })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          // Update the USN in the table
+          const usnCell = document.querySelector(`tr[data-id="${id}"] td.usn-cell`);
+          if (usnCell) {
+            usnCell.textContent = data.usn;
+          }
+        } else {
+          console.error('Error generating USN:', data.error);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  
+    // Add event listener for approved entries
+    document.addEventListener('DOMContentLoaded', function() {
+      const entries = document.querySelectorAll('tr[data-id]');
+      entries.forEach(entry => {
+        const id = entry.dataset.id;
+        const syllabus = entry.dataset.syllabus;
+        const usnCell = entry.querySelector('.usn-cell');
+        
+        if (!usnCell.textContent || usnCell.textContent === 'N/A') {
+          generateUSN(id, syllabus);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

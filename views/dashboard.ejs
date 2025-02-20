@@ -5,235 +5,312 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="dashboard.css">
   <style>
-
-
-.gender-column, .syllabus-column {
-  text-transform: capitalize;
-}
-
-
-.search-bar-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+    .gender-column, .syllabus-column {
+    text-transform: capitalize;
+  }
+  
+  .bulk-actions {
+      margin: 20px 0;
+      text-align: right;
     }
 
-    .search-bar-container input {
-      width: 300px;
-      padding: 5px 15px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    .bulk-actions button {
+      margin-left: 10px;
     }
 
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f6f9;
-      padding-top: 70px;
-    }
-
-    .dashboard-container {
-      padding: 28px;
-      margin: 20px auto;
-      background-color: #ffffff;
-      border-radius: 28px;
-      box-shadow: 1px 14px 16px rgba(5, 5, 5, 0.1);
-      width: 90%;
-      max-width: 1500px;
-    }
-
-    h1, h2 {
-      color: #4e73df;
-      text-align: center;
-    }
-
-    .navbar {
-      background-color: #4e73df;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-brand {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-
-    .navbar-brand:hover {
-      color: #d1d3e2;
-    }
-
-    .btn-logout {
-      color: #ffffff;
-      cursor: pointer;
-    }
-
-    .btn-logout:hover {
-      background-color: #ffffff;
-      color: #4e73df;
-    }
-
-    .table-responsive {
-      max-height: 500px;
-      overflow-y: auto;
-      margin-top: 20px;
-    }
-
-    .table th, .table td {
-      vertical-align: middle;
-      text-align: center;
-    }
-
-    .pagination-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    /* Styles for Pagination Buttons */
-    .pagination-container button {
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      background-color: #4e73df;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .pagination-container button:hover {
-      background-color: #2e59d9;
-      transform: translateY(-2px);
-    }
-
-    .pagination-container button:disabled {
-      background-color: #d1d3e2;
-      color: #6c757d;
+    .btn-status:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
-    /* Styles for Accept and Deny Buttons */
-    .btn-status {
-      font-size: 12px;
-      padding: 5px 10px;
-      margin: 2px;
-      border-radius: 5px;
-      display: inline-block;
+    /* Add checkbox styling */
+    .select-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
     }
 
-    .btn-status:hover {
-      opacity: 0.85;
+    /* Center align checkbox column */
+    .table th:first-child,
+    .table td:first-child {
+      width: 40px;
+      text-align: center;
+      vertical-align: middle;
     }
 
-    /* Style for the chart */
-    .chart-widget {
-      margin-top: 50px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 50%; /* Smaller size for chart */
-      margin: 0 auto;
-    }
-
-    .chart-filters {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    canvas {
-      width: 100% !important;
-      height: auto !important;
-    }
-
-    /* Media Queries for responsiveness */
-    @media (max-width: 1200px) {
-      .chart-widget {
-        width: 60%;
+  .search-bar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
       }
-    }
-
-    @media (max-width: 992px) {
-      .chart-widget {
-        width: 70%;
+  
+      .search-bar-container input {
+        width: 300px;
+        padding: 5px 15px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
       }
-    }
-
-    @media (max-width: 768px) {
+  
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f6f9;
+        padding-top: 70px;
+      }
+  
       .dashboard-container {
-        padding: 20px;
+        padding: 38px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 28px;
+        box-shadow: 1px 14px 16px rgba(5, 5, 5, 0.1);
+        width: 190%;
+        max-width: 1580px;
       }
-
-      .chart-widget {
-        width: 80%;
+  
+      h1, h2 {
+        color: #4e73df;
+        text-align: center;
       }
-
-      .table-responsive {
-        max-height: none;
-      }
-
-      .pagination-container {
-        flex-direction: column;
-      }
-
-      .pagination-container button {
-        width: 100%;
-        margin-top: 10px;
-      }
-
-      .table th, .table td {
-        font-size: 12px;
-        padding: 8px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
-    }
-
-    @media (max-width: 576px) {
+  
       .navbar {
-        padding: 10px;
+        background: linear-gradient(45deg, rgba(0, 123, 255, 0.9), rgba(0, 76, 153, 0.9));
+        padding: 9px 20px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
       }
 
+      .nav-link {
+    display: flex;
+    align-items: center;
+    color: #0c0e10; /* Bootstrap primary color */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 12px;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    color: #cfdae5; /* Darker shade for hover effect */
+   
+}
+
+  
       .navbar-brand {
-        font-size: 18px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
       }
-
-      h1 {
-        font-size: 22px;
+  
+      .navbar-brand:hover {
+        color: #d1d3e2;
       }
-
-      h2 {
-        font-size: 18px;
+  
+      .btn-logout {
+        color: #ffffff;
+        cursor: pointer;
       }
-
+  
+      .btn-logout:hover {
+        background-color: #ffffff;
+        color: #4e73df;
+      }
+  
+      .table-responsive {
+        max-height: 500px;
+        overflow-y: auto;
+        margin-top: 20px;
+        max-width: 1900px;
+     
+      }
+  
       .table th, .table td {
-        font-size: 10px;
-        padding: 6px;
+        vertical-align: middle;
+        text-align: center;
       }
-
+  
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+  
+      /* Styles for Pagination Buttons */
+      .pagination-container button {
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        background-color: #4e73df;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+  
+      .pagination-container button:hover {
+        background-color: #2e59d9;
+        transform: translateY(-2px);
+      }
+  
+      .pagination-container button:disabled {
+        background-color: #d1d3e2;
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+  
+      /* Styles for Accept and Deny Buttons */
+      .btn-status {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin: 2px;
+        border-radius: 5px;
+        display: inline-block;
+      }
+  
+      .btn-status:hover {
+        opacity: 0.85;
+      }
+  
+      /* Style for the chart */
       .chart-widget {
-        width: 90%;
+        margin-top: 50px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 50%; /* Smaller size for chart */
+        margin: 0 auto;
       }
-    }
+  
+      .chart-filters {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+  
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+  
+      /* Media Queries for responsiveness */
+      @media (max-width: 1200px) {
+        .chart-widget {
+          width: 60%;
+        }
+      }
+  
+      @media (max-width: 992px) {
+        .chart-widget {
+          width: 70%;
+        }
+      }
+  
+      @media (max-width: 768px) {
+  #approvedListBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Search bar and button adjustments */
+  .search-bar-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar-container input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Table styles for smaller screens */
+  .table th,
+  .table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .table-responsive {
+    max-height: none;
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+  }
+
+  /* Navbar adjustments */
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .btn-logout {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  #approvedListBtn {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .search-bar-container input {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    font-size: 10px;
+    padding: 4px;
+  }
+}
+
+   /* Approved List Button Styles */
+#approvedListBtn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #4e73df;
+  color: #e5ede7;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+#approvedListBtn:hover {
+  background-color: #2e59d9;
+  transform: translateY(-2px);
+}
   </style>
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">School</a>
+      <a class="navbar-brand" href="/"><i class="fas fa-school"></i></a>
+      <a class="nav-link" href="/fee-structure"><i class="fas fa-file-invoice-dollar"></i>  FEE</a> 
       <div class="ml-auto">
-        <button id="logoutButton" class="btn btn-danger" onclick="logout()">Logout</button>
+        <button id="logoutButton" class="btn btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
 
       </div>
     </div>
@@ -245,6 +322,14 @@
     <!-- Search Bar Section -->
     <div class="search-bar-container">
         <h2>Submitted Entries</h2>
+
+        <!-- Approved List Button -->
+<div class="text-center">
+  <!-- Approved List Button -->
+<button id="approvedListBtn" onclick="redirectToApprovedList()">Approved List</button>
+
+</div>
+
         <input type="text" id="searchInput" class="form-control" placeholder="Search by Name or ID" onkeyup="searchEntries()" />
       </div>
 
@@ -253,6 +338,9 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th>
+              <input type="checkbox" id="selectAll" onclick="toggleSelectAll()" />
+            </th>
             <th>Sl.No</th>
             <th>ID</th> <!-- New Column for ID -->
             <th>Name</th>
@@ -274,6 +362,12 @@
           <% if (entries && entries.length > 0) { %>
             <% entries.forEach((entry, index) => { if (index < 4) { %> 
               <tr class="entry-row">
+                <td>
+                  <input type="checkbox" class="entry-checkbox select-checkbox" 
+                         data-entry-id="<%= entry.id %>" 
+                         onchange="updateBulkButtons()" 
+                         <%= entry.status ? 'disabled' : '' %> />
+              </td>
                 <td><%= entry.id %></td> <!-- Display ID -->
                 <td><%= entry.name %></td>
                 <td><%= entry.email %></td>
@@ -284,7 +378,7 @@
                 <td><%= entry.mother_name %></td>
                 <td><%= entry.mother_occupation %></td>
                 <!-- <td><%= entry.sex %></td> -->
-                <td class="gender-column"><%= entry.gender %></td>
+                <td class="gender-column"><%= entry.sex %></td>
                 <!-- <td><%= entry.syllabus %></td> -->
                 <td class="syllabus-column"><%= entry.syllabus %></td>
 
@@ -296,12 +390,12 @@
                   <% } else if (entry.status === 'denied') { %>
                     <span class="badge badge-danger">Denied</span>
                   <% } else { %>
-                    <div>
-                      <button class="btn btn-success btn-status" onclick="updateStatus('<%= entry.id %>', 'accepted')">Accept</button>
-                      <button class="btn btn-danger btn-status" onclick="updateStatus('<%= entry.id %>', 'denied')">Deny</button>
-                    </div>
+                    <button id="bulkAcceptBtn" class="btn btn-success" onclick="bulkUpdateStatus('accepted')" disabled> Accept</button>
+                    <button id="bulkDenyBtn" class="btn btn-danger" onclick="bulkUpdateStatus('denied')" disabled> Deny</button>
+                    
                   <% } %>
                 </td>
+                
               </tr>
             <% } }) %>
           <% } else { %>
@@ -385,6 +479,10 @@
     }
 
 
+    
+function updateStatus(){
+  window.alert("Are you sure ?    ")
+}
     function filterEntries() {
   const syllabusValue = syllabusFilter.value.trim();
   const classValue = classFilter.value.trim();
@@ -401,46 +499,163 @@
   paginateEntries();
 }
 
+function updateBulkButtons() {
+            const checkboxes = document.getElementsByClassName('entry-checkbox');
+            const checkedBoxes = Array.from(checkboxes).filter(checkbox => 
+                checkbox.checked && !checkbox.disabled
+            );
+            
+            const bulkAcceptBtn = document.getElementById('bulkAcceptBtn');
+            const bulkDenyBtn = document.getElementById('bulkDenyBtn');
+            
+            const hasCheckedBoxes = checkedBoxes.length > 0;
+            bulkAcceptBtn.disabled = !hasCheckedBoxes;
+            bulkDenyBtn.disabled = !hasCheckedBoxes;
+        }
+
+    // Modified toggleSelectAll function
+    function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const entryCheckboxes = document.getElementsByClassName('entry-checkbox');
+            
+            Array.from(entryCheckboxes).forEach(checkbox => {
+                if (!checkbox.disabled) {
+                    checkbox.checked = selectAllCheckbox.checked;
+                }
+            });
+            
+            updateBulkButtons();
+        }
+
+    // Function to handle bulk status updates
+    
+        function bulkUpdateStatus(status) {
+            const checkboxes = document.getElementsByClassName('entry-checkbox');
+            const selectedIds = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked && !checkbox.disabled)
+                .map(checkbox => checkbox.getAttribute('data-entry-id'));
+            
+            if (selectedIds.length === 0) return;
+
+            const confirmMessage = `Are you sure you want to ${status} ${selectedIds.length} selected entries?`;
+            if (!confirm(confirmMessage)) return;
+
+            Promise.all(selectedIds.map(id => 
+                fetch(`/update-status/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: status })
+                })
+            ))
+            .then(responses => Promise.all(responses.map(r => r.json())))
+            .then(results => {
+                const allSuccessful = results.every(result => result.success);
+                if (allSuccessful) {
+                    alert("Selected entries have been updated successfully!");
+                    location.reload();
+                } else {
+                    alert("Some entries could not be updated. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error updating entries:', error);
+                alert('An error occurred while updating the entries.');
+            });
+        }
+
+        function updateStatus(id, status) {
+            const confirmMessage = `Are you sure you want to ${status} this entry?`;
+            if (!confirm(confirmMessage)) return;
+
+            fetch(`/update-status/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Status updated successfully!");
+                    location.reload();
+                } else {
+                    alert("Failed to update status.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the status.');
+            });
+        }
+ 
 
 
-    function paginateEntries() {
-  const start = (currentPage - 1) * entriesPerPage;
-  const end = start + entriesPerPage;
-  const paginatedEntries = filteredEntries.slice(start, end);
+        function paginateEntries() {
+            const start = (currentPage - 1) * entriesPerPage;
+            const end = start + entriesPerPage;
+            const paginatedEntries = filteredEntries.slice(start, end);
 
-  const tableBody = document.getElementById('entriesTableBody');
-  tableBody.innerHTML = '';
+            const tableBody = document.getElementById('entriesTableBody');
+            tableBody.innerHTML = '';
 
-  paginatedEntries.forEach((entry, index) => {
-    const row = document.createElement('tr');
-    row.classList.add('entry-row');
-    row.innerHTML = `
-      <td>${start + index + 1}</td> <!-- Generate Sl.No dynamically -->
-      <td>${entry.id}</td>
-      <td>${entry.name}</td>
-      <td>${entry.email}</td>
-      <td>${entry.contact}</td>
-      <td>${entry.class}</td>
-      <td>${entry.father_name}</td>
-      <td>${entry.father_occupation}</td>
-      <td>${entry.mother_name}</td>
-      <td>${entry.mother_occupation}</td>
-      <td>${entry.sex}</td>
-      <td>${entry.syllabus}</td>
-      <td>${entry.message}</td>
-      <td>${entry.dated}</td>
-      <td>${entry.status === 'accepted' ? 
-          '<span class="badge badge-success">Accepted</span>' : 
-          (entry.status === 'denied' ? 
-          '<span class="badge badge-danger">Denied</span>' : 
-          '<div><button class="btn btn-success btn-status">Accept</button><button class="btn btn-danger btn-status">Deny</button></div>')}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+            paginatedEntries.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                row.classList.add('entry-row');
+                
+                const isDisabled = entry.status === 'accepted' || entry.status === 'denied';
+                
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="entry-checkbox select-checkbox" 
+                               data-entry-id="${entry.id}" 
+                               onchange="updateBulkButtons()"
+                               ${isDisabled ? 'disabled' : ''} />
+                    </td>
+                    <td>${start + index + 1}</td>
+                    <td>${entry.id}</td>
+                    <td>${entry.name}</td>
+                    <td>${entry.email}</td>
+                    <td>${entry.contact}</td>
+                    <td>${entry.class}</td>
+                    <td>${entry.father_name}</td>
+                    <td>${entry.father_occupation}</td>
+                    <td>${entry.mother_name}</td>
+                    <td>${entry.mother_occupation}</td>
+                    <td class="gender-column">${entry.sex}</td>
+                    <td class="syllabus-column">${entry.syllabus}</td>
+                    <td>${entry.message}</td>
+                    <td>${entry.dated}</td>
+                    <td>
+                        ${entry.status === 'accepted' ? 
+                            '<span class="badge badge-success">Accepted</span>' : 
+                            (entry.status === 'denied' ? 
+                            '<span class="badge badge-danger">Denied</span>' : 
+                            '<div><button class="btn btn-success btn-status" onclick="updateStatus(\'' + entry.id + '\', \'accepted\')">Accept</button><button class="btn btn-danger btn-status" onclick="updateStatus(\'' + entry.id + '\', \'denied\')">Deny</button></div>')}
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
 
-  document.getElementById('prevPageBtn').disabled = currentPage === 1;
-  document.getElementById('nextPageBtn').disabled = currentPage * entriesPerPage >= filteredEntries.length;
-}
+            document.getElementById('prevPageBtn').disabled = currentPage === 1;
+            document.getElementById('nextPageBtn').disabled = currentPage * entriesPerPage >= filteredEntries.length;
+            
+            // Reset select all checkbox and bulk buttons when page changes
+            document.getElementById('selectAll').checked = false;
+            updateBulkButtons();
+        }
+
+
+    document.addEventListener('change', function(e) {
+      if (e.target.classList.contains('entry-checkbox')) {
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const entryCheckboxes = document.getElementsByClassName('entry-checkbox');
+        const allChecked = Array.from(entryCheckboxes).every(checkbox => checkbox.checked);
+        selectAllCheckbox.checked = allChecked;
+      }
+    });
 
 
     function changePage(direction) {
@@ -476,5 +691,15 @@
 }
 
   </script>
+
+<script>
+  function redirectToApprovedList() {
+    console.log('Redirecting to approved list...');
+    window.location.href = '/approved-list';  // Redirects to the approved entries page
+  }
+</script>
+
+
+
 </body>
 </html>
